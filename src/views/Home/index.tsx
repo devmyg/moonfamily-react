@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Board() {
+export default function Home() {
   return (
     <>
-      <div>보드</div>
+      <div>홈</div>
     </>
   );
 }

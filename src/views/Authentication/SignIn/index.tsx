@@ -4,7 +4,6 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import "./style.css";
 import { signInApi } from "../../../apis";
-import MainLayout from "../../layouts/MainLayout";
 
 interface Props {
   setAuthView: (authView: boolean) => void;
