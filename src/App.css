@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: "NEXON Lv2 Gothic Medium";
+  src: url("./fonts/NEXON\ Lv2\ Gothic\ Medium.ttf");
+}
