@@ -4,10 +4,11 @@ import { useCookies } from "react-cookie";
 import { Route, Routes } from "react-router-dom";
 import { useUserStore } from "../../../stores";
 import Authentication from "../../Authentication";
-import Board from "../../Board";
+import Board from "../../../components/Board";
 import Home from "../../Home";
 import Menu from "../../Menu";
 import "./style.css";
+import CreatePost from "../../../components/CreatePost";
 
 export default function MainLayout() {
   const [userResponse, setUserResponse] = useState<string>("");
@@ -43,10 +44,13 @@ export default function MainLayout() {
           {userResponse ? (
             <>
               <Menu />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/board" element={<Board />} />
-              </Routes>
+              <div className="content-box">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/board" element={<Board />} />
+                  <Route path="/createpost" element={<CreatePost />} />
+                </Routes>
+              </div>
             </>
           ) : (
             <Authentication />

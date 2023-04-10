@@ -7,12 +7,17 @@ interface UserStore {
 }
 
 const useStore = create<UserStore>((set) => ({
-  user: null,
+  user: (() => {
+    const user = sessionStorage.getItem("user");
+    return user !== null ? JSON.parse(user) : null;
+  })(),
   setUser: (user: any) => {
-    set((state) => ({ ...state, user }));
+    sessionStorage.setItem("user", JSON.stringify(user));
+    set({ user });
   },
   removeUser: () => {
-    set((state) => ({ ...state, user: null }));
+    sessionStorage.removeItem("user");
+    set({ user: null });
   },
 }));
 export default useStore;
