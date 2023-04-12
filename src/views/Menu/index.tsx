@@ -14,6 +14,7 @@ export default function Menu() {
   const logOutHandler = () => {
     setCookies("token", "", { expires: new Date() });
     removeUser();
+    window.location.reload();
   };
 
   const getUserData = () => {
@@ -47,7 +48,7 @@ export default function Menu() {
                 size="small"
                 src={
                   user.userProfile != null
-                    ? user.userProfile
+                    ? `http://moonfamily.duckdns.org:8080/` + user.userProfile
                     : "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
                 }
                 alt="avatar"
