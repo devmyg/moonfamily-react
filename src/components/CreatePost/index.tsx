@@ -1,11 +1,26 @@
 import { Form, Input, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { writeApi } from "../../apis";
+import { useCookies } from "react-cookie";
 
 function CreatePost() {
   const history = useNavigate();
+  const [cookies] = useCookies();
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     // 게시글 작성 처리 로직
+    const token = cookies.token;
+    const writeResponse = await writeApi(values, token);
+    if (!writeResponse) {
+      alert("글 작성에 실패했습니다.");
+      return;
+    }
+
+    if (!writeResponse.result) {
+      alert("글 작성에 실패했습니다.");
+      return;
+    }
+
     console.log(values);
     message.success("게시글이 작성되었습니다.");
 
@@ -29,7 +44,7 @@ function CreatePost() {
       >
         <Form.Item
           label="제목"
-          name="title"
+          name="boardTitle"
           rules={[{ required: true, message: "제목을 입력해주세요." }]}
         >
           <Input />
@@ -37,7 +52,7 @@ function CreatePost() {
 
         <Form.Item
           label="내용"
-          name="content"
+          name="boardContent"
           rules={[{ required: true, message: "내용을 입력해주세요." }]}
         >
           <Input.TextArea rows={10} />

@@ -1,79 +1,104 @@
-import { useState } from "react";
-import { Button, Pagination, Table } from "antd";
+import { useEffect, useState } from "react";
+import { Table, Row, Col, Pagination, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
-const { Column } = Table;
-
-const data = [
-  {
-    id: 1,
-    title: "게시글 제목 1",
-    author: "글쓴이 1",
-    createdAt: "2022-04-09",
-  },
-  {
-    id: 2,
-    title: "게시글 제목 2",
-    author: "글쓴이 2",
-    createdAt: "2022-04-08",
-  },
-  {
-    id: 3,
-    title: "게시글 제목 3",
-    author: "글쓴이 3",
-    createdAt: "2022-04-07",
-  },
-  {
-    id: 4,
-    title: "게시글 제목 4",
-    author: "글쓴이 4",
-    createdAt: "2022-04-06",
-  },
-];
+import { getList } from "../../apis";
+import "./style.css";
 
 const Board = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [list, setList] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const history = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getList(currentPage);
+      if (data) {
+        setList(data.boardList);
+        setTotalPages(data.totalPages);
+      }
+    };
+    fetchData();
+  }, [currentPage]);
 
   const handleClickAddPost = () => {
     history("/createpost");
   };
 
-  function handleChangePagination(page: number, pageSize: number) {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    setPageSize(pageSize);
-  }
+  };
+
+  const handleRowClick = (record: any) => {
+    history(`/board/${record.boardNumber}`);
+  };
+
+  const columns = [
+    {
+      title: "번호",
+      dataIndex: "boardNumber",
+      key: "boardNumber",
+    },
+    {
+      title: "제목",
+      dataIndex: "boardTitle",
+      key: "boardTitle",
+    },
+    {
+      title: "글쓴이",
+      dataIndex: "boardWriterId",
+      key: "boardWriterId",
+    },
+    {
+      title: "작성일",
+      dataIndex: "boardWriteDate",
+      key: "boardWriteDate",
+    },
+    {
+      title: "조회수",
+      dataIndex: "boardClickCount",
+      key: "boardClickCount",
+    },
+    {
+      title: "추천수",
+      dataIndex: "boardLikeCount",
+      key: "boardLikeCount",
+    },
+  ];
 
   return (
-    <div>
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        onClick={handleClickAddPost}
-        style={{
-          position: "fixed",
-          bottom: "50px",
-          right: "50px",
-        }}
-      >
-        새 글 작성
-      </Button>
-      <Table dataSource={data} pagination={false}>
-        <Column title="번호" dataIndex="id" key="id" />
-        <Column title="제목" dataIndex="title" key="title" />
-        <Column title="글쓴이" dataIndex="author" key="author" />
-        <Column title="작성일" dataIndex="createdAt" key="createdAt" />
-      </Table>
-      <Pagination
-        current={currentPage}
-        pageSize={pageSize}
-        total={data.length}
-        onChange={handleChangePagination}
-        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
-      />
-    </div>
+    <>
+      <div className="board-box">
+        <Table
+          columns={columns}
+          dataSource={list}
+          pagination={false}
+          rowKey="boardNumber"
+          scroll={{ x: true }}
+          onRow={(record) => ({
+            onClick: () => {
+              handleRowClick(record);
+            },
+          })}
+        />
+        <Row justify="center" gutter={[0, 16]}>
+          <Col xs={24} sm={12}>
+            <Pagination current={currentPage} total={totalPages * 10} onChange={handlePageChange} />
+          </Col>
+          <Col xs={24} sm={12}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={handleClickAddPost}
+              style={{ width: "100%" }}
+            >
+              새 글 작성
+            </Button>
+          </Col>
+        </Row>
+      </div>
+    </>
   );
 };
 

@@ -32,13 +32,6 @@ export default function Menu() {
           <Link to={"/board"}>
             <Button>게시판</Button>
           </Link>
-          <Button
-            onClick={() => {
-              getUserData();
-            }}
-          >
-            테스트
-          </Button>
         </Space.Compact>
 
         <Space.Compact block>
