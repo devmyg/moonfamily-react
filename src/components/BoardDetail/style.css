@@ -1,0 +1,23 @@
+.board-detail-box {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.board-detail-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.board-detail-writer {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.board-detail-content {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 32px;
+}

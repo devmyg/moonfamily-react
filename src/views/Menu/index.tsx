@@ -1,25 +1,22 @@
 import React from "react";
 import { Avatar, Button, Space } from "antd";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import { useCookies } from "react-cookie";
-import { useUserStore } from "../../stores";
+import { useNavigate } from "react-router-dom";
 
 import "./style.css";
 import { Link } from "react-router-dom";
 
 export default function Menu() {
-  const { user, removeUser } = useUserStore();
   const [cookies, setCookies] = useCookies();
+  const history = useNavigate();
 
   const logOutHandler = () => {
+    history("/");
     setCookies("token", "", { expires: new Date() });
-    removeUser();
-    window.location.reload();
+    setCookies("user", "", { expires: new Date() });
   };
 
-  const getUserData = () => {
-    console.log(user);
-  };
   return (
     <>
       <Space className="bar">
@@ -40,13 +37,13 @@ export default function Menu() {
               <Avatar
                 size="small"
                 src={
-                  user.userProfile != null
-                    ? `http://moonfamily.duckdns.org:8080/` + user.userProfile
+                  cookies.user && cookies.user.userProfile != null
+                    ? `http://moonfamily.duckdns.org:8080/` + cookies.user.userProfile
                     : "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
                 }
                 alt="avatar"
               />
-              {user != null && <>{user.userName}</>} 님
+              {cookies.user && cookies.user.userName} 님
             </Space>
           </Button>
           <Button danger onClick={() => logOutHandler()}>

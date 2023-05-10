@@ -1,5 +1,4 @@
 import { useCookies } from "react-cookie";
-import { useUserStore } from "../../../stores";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import "./style.css";
@@ -11,8 +10,6 @@ interface Props {
 
 export default function SignIn(props: Props) {
   const [cookies, setCookies] = useCookies();
-
-  const { user, setUser } = useUserStore();
 
   const { setAuthView } = props;
 
@@ -29,14 +26,13 @@ export default function SignIn(props: Props) {
       return;
     }
 
-    // alert(signInResponse.result);
-
     const { token, exprTime, user } = signInResponse.data;
     const expires = new Date();
     expires.setMilliseconds(expires.getMilliseconds() + exprTime);
 
     setCookies("token", token, { expires });
-    setUser(user);
+    setCookies("user", user, { expires });
+    console.log(user);
   };
 
   return (

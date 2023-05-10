@@ -1,44 +1,59 @@
 import { Form, Input, Button, message } from "antd";
-import { useNavigate } from "react-router-dom";
-import { writeApi } from "../../apis";
+import { useNavigate, useParams } from "react-router-dom";
+import { writeApi, updateApi } from "../../apis";
 import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react";
 
-function CreatePost() {
+function UpdatePost() {
+  const { boardNumber } = useParams();
   const history = useNavigate();
   const [cookies] = useCookies();
+  const [loading, setLoading] = useState(false);
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const token = cookies.token;
+      const response = await updateApi(boardNumber, token);
+      if (response && response.result) {
+        setPost(response.data);
+      }
+    };
+    fetchPost();
+  }, [boardNumber, cookies]);
 
   const onFinish = async (values: any) => {
-    // 게시글 작성 처리 로직
+    setLoading(true);
     const token = cookies.token;
     const writeResponse = await writeApi(values, token);
     if (!writeResponse) {
-      message.error("글 작성에 실패했습니다.");
+      setLoading(false);
+      message.error("글 수정에 실패했습니다.");
       return;
     }
 
     if (!writeResponse.result) {
-      message.error("글 작성에 실패했습니다.");
+      setLoading(false);
+      message.error("글 수정에 실패했습니다.");
       return;
     }
 
-    console.log(values);
-    message.success("게시글이 작성되었습니다.");
-
-    // 게시글 목록 페이지로 이동
+    setLoading(false);
+    message.success("게시글이 수정되었습니다.");
     history("/board");
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
-    message.error("게시글 작성에 실패했습니다.");
+    message.error("게시글 수정에 실패했습니다.");
   };
 
   return (
     <div style={{ padding: 20 }}>
-      <h1 style={{ marginBottom: 20 }}>글 작성</h1>
+      <h1 style={{ marginBottom: 20 }}>글 수정</h1>
       <Form
-        name="create-post-form"
-        initialValues={{ remember: true }}
+        name="update-post-form"
+        initialValues={post}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         layout="vertical"
@@ -60,8 +75,8 @@ function CreatePost() {
         </Form.Item>
 
         <Form.Item style={{ textAlign: "right" }}>
-          <Button type="primary" htmlType="submit" size="large">
-            작성
+          <Button type="primary" htmlType="submit" size="large" loading={loading}>
+            수정
           </Button>
         </Form.Item>
       </Form>
@@ -69,4 +84,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default UpdatePost;

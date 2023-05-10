@@ -2,18 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Route, Routes } from "react-router-dom";
-import { useUserStore } from "../../../stores";
 import Authentication from "../../Authentication";
 import Board from "../../../components/Board";
 import Home from "../../Home";
 import Menu from "../../Menu";
 import "./style.css";
 import CreatePost from "../../../components/CreatePost";
+import BoardDetail from "../../../components/BoardDetail";
+import UpdatePost from "../../../components/UpdatePost";
 
 export default function MainLayout() {
   const [userResponse, setUserResponse] = useState<string>("");
   const [cookies] = useCookies();
-  const { user, setUser } = useUserStore();
 
   const getUserResponse = async (token: string) => {
     const requestOption = {
@@ -49,6 +49,8 @@ export default function MainLayout() {
                   <Route path="/" element={<Home />} />
                   <Route path="/board" element={<Board />} />
                   <Route path="/createpost" element={<CreatePost />} />
+                  <Route path="/board/:boardNumber" element={<BoardDetail />} />
+                  <Route path="/board/update/:boardNumber" element={<UpdatePost />} />
                 </Routes>
               </div>
             </>
