@@ -1,0 +1,28 @@
+.profile-update-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.profile-image-container {
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.upload-container {
+  margin-bottom: 20px;
+}
+
+.upload-button {
+  margin-right: 10px;
+}
+
+.file-selected {
+  margin-left: 10px;
+  font-weight: bold;
+}

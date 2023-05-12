@@ -11,17 +11,11 @@ function CreatePost() {
     // 게시글 작성 처리 로직
     const token = cookies.token;
     const writeResponse = await writeApi(values, token);
-    if (!writeResponse) {
-      message.error("글 작성에 실패했습니다.");
+    if (!writeResponse || !writeResponse.result) {
+      message.error(writeResponse.message);
       return;
     }
 
-    if (!writeResponse.result) {
-      message.error("글 작성에 실패했습니다.");
-      return;
-    }
-
-    console.log(values);
     message.success("게시글이 작성되었습니다.");
 
     // 게시글 목록 페이지로 이동
@@ -29,7 +23,6 @@ function CreatePost() {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
     message.error("게시글 작성에 실패했습니다.");
   };
 

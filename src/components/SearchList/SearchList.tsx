@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Table, Row, Col, Pagination, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import { clickBoard, getList } from "../../apis";
+import { useNavigate, useParams } from "react-router-dom";
+import { clickBoard, searchList } from "../../apis";
 import "./style.css";
 import { useCookies } from "react-cookie";
 
@@ -21,7 +21,8 @@ interface BoardItem {
   boardLikeCount: number;
 }
 
-const Board = () => {
+const SearchList = () => {
+  const { searchValue } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [list, setList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
@@ -30,14 +31,16 @@ const Board = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getList(currentPage, cookies.token);
-      if (data) {
-        setList(data.boardList);
-        setTotalPages(data.totalPages);
+      if (searchValue) {
+        const data = await searchList(searchValue, currentPage, cookies.token);
+        if (data) {
+          setList(data.boardList);
+          setTotalPages(data.totalPages);
+        }
       }
     };
     fetchData();
-  }, [currentPage]);
+  }, [searchValue, currentPage]);
 
   const handleClickAddPost = () => {
     history("/createpost");
@@ -127,4 +130,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default SearchList;

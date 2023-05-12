@@ -1,6 +1,6 @@
 import { useCookies } from "react-cookie";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import "./style.css";
 import { signInApi } from "../../../apis";
 
@@ -9,20 +9,15 @@ interface Props {
 }
 
 export default function SignIn(props: Props) {
-  const [cookies, setCookies] = useCookies();
+  const [, setCookies] = useCookies();
 
   const { setAuthView } = props;
 
   const onFinish = async (values: any) => {
     const signInResponse = await signInApi(values);
 
-    if (!signInResponse) {
-      alert("로그인에 실패했습니다.");
-      return;
-    }
-
-    if (!signInResponse.result) {
-      alert("로그인에 실패했습니다.");
+    if (!signInResponse || !signInResponse.result) {
+      message.error(signInResponse.message);
       return;
     }
 
@@ -32,17 +27,11 @@ export default function SignIn(props: Props) {
 
     setCookies("token", token, { expires });
     setCookies("user", user, { expires });
-    console.log(user);
   };
 
   return (
     <>
-      <Form
-        name="normal_login"
-        className="login-form"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
+      <Form name="normal_login" className="login-form" onFinish={onFinish}>
         <Form.Item>
           <div className="logo-title">
             <img className="logo" src="logo512.png" alt="logo" />
@@ -63,24 +52,19 @@ export default function SignIn(props: Props) {
           />
         </Form.Item>
         <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>자동 로그인</Checkbox>
-          </Form.Item>
-        </Form.Item>
-        <Form.Item>
           <p>
             <Button type="primary" htmlType="submit" className="login-form-button">
               로그인
-            </Button>
+            </Button>{" "}
             계정이 존재하지 않으신가요?{" "}
-            <a
-              href="#"
+            <span
               onClick={() => {
                 setAuthView(true);
               }}
+              style={{ textDecoration: "underline", cursor: "pointer" }}
             >
               회원가입
-            </a>
+            </span>
           </p>
         </Form.Item>
       </Form>

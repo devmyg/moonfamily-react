@@ -1,27 +1,34 @@
-.comment-list-box {
-  max-width: 360px;
-  margin: 0 auto;
-  padding: 16px;
-  border: 1px solid #e5e5e5;
+.comment-list {
+  overflow: auto;
+  height: 44vh;
+  margin-bottom: 24px;
 }
 
-.comment-list-header {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 16px;
+.comment-list::-webkit-scrollbar {
+  width: 0;
 }
 
-.comment-item {
-  margin-bottom: 16px;
+.comment-list::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.comment-writer {
+.comment-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.comment-list .ant-list-item {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.comment-list .ant-list-item-meta {
+  margin-right: 0;
+}
+
+.comment-list .ant-list-item-meta-title {
+  margin-bottom: 4px;
+}
+
+.comment-list .ant-typography {
   font-size: 14px;
-  color: #666;
-  margin-bottom: 8px;
-}
-
-.comment-content {
-  font-size: 16px;
-  line-height: 1.5;
 }

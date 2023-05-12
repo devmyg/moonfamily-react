@@ -1,34 +1,37 @@
 import { Card, Divider, List, Tag } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { getPopularSearch } from "../../apis";
+
+type Post = {
+  popularTerm: string;
+  popularSearchCount: number;
+};
 
 export default function PopularSearch() {
-  const data = [
-    {
-      keyword: "React",
-      count: 160,
-    },
-    {
-      keyword: "TypeScript",
-      count: 98,
-    },
-    {
-      keyword: "Node.js",
-      count: 76,
-    },
-  ];
+  const [list, setList] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getPopularSearch();
+      if (result && result.result) {
+        setList(result.data);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Card title="자주 검색한 내용" style={{ marginBottom: "24px" }}>
       <List
-        dataSource={data}
+        dataSource={list}
         renderItem={(item) => (
           <List.Item>
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+              <div>{item.popularTerm}</div>
               <div>
-                <a href="#">{item.keyword}</a>
-              </div>
-              <div>
-                <Tag>{item.count}</Tag>
+                <SearchOutlined style={{ marginRight: "8px" }} />
+                {item.popularSearchCount}
               </div>
             </div>
           </List.Item>

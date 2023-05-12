@@ -1,8 +1,6 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, message } from "antd";
 import "./style.css";
 import { signUpApi } from "../../../apis";
-
-const { Option } = Select;
 
 interface Props {
   setAuthView: (authView: boolean) => void;
@@ -15,27 +13,13 @@ export default function SignUp(props: Props) {
 
   const onFinish = async (values: any) => {
     const signUpResponse = await signUpApi(values);
-    if (!signUpResponse) {
-      alert("회원가입에 실패했습니다.");
+    if (!signUpResponse || !signUpResponse.result) {
+      message.error(signUpResponse.message);
       return;
     }
-
-    if (!signUpResponse.result) {
-      alert("회원가입에 실패했습니다.");
-      return;
-    }
-
-    alert("회원가입에 성공했습니다.");
+    message.success("회원가입 성공");
     setAuthView(false);
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="82">+82</Option>
-      </Select>
-    </Form.Item>
-  );
 
   return (
     <Form
@@ -126,7 +110,7 @@ export default function SignUp(props: Props) {
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
       >
-        <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
+        <Input />
       </Form.Item>
 
       <Form.Item>
@@ -135,16 +119,15 @@ export default function SignUp(props: Props) {
             회원가입
           </Button>
           <br />
-          이미 계정이 있으신가요?
-          <a
-            href="#"
+          이미 계정이 있으신가요?{" "}
+          <span
             onClick={() => {
               setAuthView(false);
             }}
+            style={{ textDecoration: "underline", cursor: "pointer" }}
           >
-            {" "}
             로그인
-          </a>
+          </span>
         </p>
       </Form.Item>
     </Form>

@@ -2,14 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Route, Routes } from "react-router-dom";
-import Authentication from "../../Authentication";
 import Board from "../../../components/Board";
+import BoardDetail from "../../../components/BoardDetail";
+import CreatePost from "../../../components/CreatePost";
+import ProfileUpdate from "../../../components/ProfileUpdate";
+import SearchList from "../../../components/SearchList/SearchList";
+import UpdatePost from "../../../components/UpdatePost";
+import Authentication from "../../Authentication";
 import Home from "../../Home";
 import Menu from "../../Menu";
 import "./style.css";
-import CreatePost from "../../../components/CreatePost";
-import BoardDetail from "../../../components/BoardDetail";
-import UpdatePost from "../../../components/UpdatePost";
 
 export default function MainLayout() {
   const [userResponse, setUserResponse] = useState<string>("");
@@ -51,6 +53,8 @@ export default function MainLayout() {
                   <Route path="/createpost" element={<CreatePost />} />
                   <Route path="/board/:boardNumber" element={<BoardDetail />} />
                   <Route path="/board/update/:boardNumber" element={<UpdatePost />} />
+                  <Route path="/profile" element={<ProfileUpdate />} />
+                  <Route path="/search/:searchValue" element={<SearchList />} />
                 </Routes>
               </div>
             </>
