@@ -119,7 +119,6 @@ const CommentList = ({ boardNumber }: CommentListProps) => {
   const handleDelete = async (commentId: number) => {
     const token = cookies.token;
     const deleteResponse = await deleteComment(commentId, token);
-    console.log(deleteResponse);
     if (!deleteResponse || !deleteResponse.result) {
       message.error(deleteResponse.message);
       return;
