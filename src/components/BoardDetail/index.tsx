@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Row, Col, Button, Grid, Tooltip, Avatar, Divider, Typography } from "antd";
-import { getDetail, deleteBoard, clickBoardLike } from "../../apis";
-import CommentList from "../CommentList";
-import { useCookies } from "react-cookie";
-import "./style.css";
 import { LikeOutlined } from "@ant-design/icons";
+import { Avatar, Button, Col, Divider, Grid, Row, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate, useParams } from "react-router-dom";
+import { clickBoardLike, deleteBoard, getDetail } from "../../apis";
+import CommentList from "../CommentList";
+import "./style.css";
 
 const { Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -101,7 +101,7 @@ const BoardDetail = () => {
               <Avatar
                 src={
                   board.user && board.user.userProfile
-                    ? `http://moonfamily.duckdns.org:8080/${board.user.userProfile}`
+                    ? `https://moonfamily.kro.kr/${board.user.userProfile}`
                     : `https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg`
                 }
                 size={32}

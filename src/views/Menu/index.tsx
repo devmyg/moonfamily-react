@@ -51,7 +51,7 @@ export default function Menu() {
                   size="small"
                   src={
                     cookies.user && cookies.user.userProfile != null
-                      ? `http://moonfamily.duckdns.org:8080/` + cookies.user.userProfile
+                      ? `https://moonfamily.kro.kr/` + cookies.user.userProfile
                       : "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
                   }
                   alt="avatar"

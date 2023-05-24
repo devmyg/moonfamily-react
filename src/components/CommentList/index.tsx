@@ -1,10 +1,21 @@
-import { useState, useEffect } from "react";
-import { List, Form, Input, Button, message, Space, Popconfirm, ButtonProps, Modal } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  Avatar,
+  Button,
+  ButtonProps,
+  Form,
+  Input,
+  List,
+  Modal,
+  Popconfirm,
+  Space,
+  Typography,
+  message,
+} from "antd";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { deleteComment, getComment, updateComment, writeComment } from "../../apis";
 import "./style.css";
-import { useCookies } from "react-cookie";
-import { Avatar, Typography } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -159,7 +170,7 @@ const CommentList = ({ boardNumber }: CommentListProps) => {
               avatar={
                 comment.user && comment.user.userProfile ? (
                   <Avatar
-                    src={`http://moonfamily.duckdns.org:8080/${comment.user.userProfile}`}
+                    src={`https://moonfamily.kro.kr/${comment.user.userProfile}`}
                     style={{ marginTop: "20px" }}
                   />
                 ) : (

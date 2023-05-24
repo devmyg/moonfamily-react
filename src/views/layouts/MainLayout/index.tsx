@@ -24,7 +24,7 @@ export default function MainLayout() {
       },
     };
     await axios
-      .get("http://moonfamily.duckdns.org:8080/api/auth/", requestOption)
+      .get("https://moonfamily.kro.kr/api/auth/", requestOption)
       .then((response) => {
         setUserResponse(response.data);
       })
