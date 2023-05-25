@@ -1,6 +1,6 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload, message } from "antd";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { uploadProfile } from "../../apis";
 import "./style.css";
@@ -52,7 +52,7 @@ const ProfileUpdate = () => {
         <img
           src={
             cookies.user && cookies.user.userProfile != null
-              ? `https://moonfamily.kro.kr/` + cookies.user.userProfile
+              ? `${process.env.REACT_APP_API_URL}/` + cookies.user.userProfile
               : "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
           }
           alt="프로필 사진"

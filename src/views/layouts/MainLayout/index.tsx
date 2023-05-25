@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Route, Routes } from "react-router-dom";
 import Board from "../../../components/Board";
 import BoardDetail from "../../../components/BoardDetail";
+import Chat from "../../../components/Chat";
 import CreatePost from "../../../components/CreatePost";
 import ProfileUpdate from "../../../components/ProfileUpdate";
 import SearchList from "../../../components/SearchList/SearchList";
@@ -24,7 +25,7 @@ export default function MainLayout() {
       },
     };
     await axios
-      .get("https://moonfamily.kro.kr/api/auth/", requestOption)
+      .get(`${process.env.REACT_APP_API_URL}/api/auth/`, requestOption)
       .then((response) => {
         setUserResponse(response.data);
       })
@@ -55,6 +56,7 @@ export default function MainLayout() {
                   <Route path="/board/update/:boardNumber" element={<UpdatePost />} />
                   <Route path="/profile" element={<ProfileUpdate />} />
                   <Route path="/search/:searchValue" element={<SearchList />} />
+                  <Route path="/chat" element={<Chat />} />
                 </Routes>
               </div>
             </>

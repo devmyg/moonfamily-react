@@ -1,8 +1,8 @@
-import { Card, Divider, List, Tag } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
-import { getTop3 } from "../../apis";
-import { useEffect, useState } from "react";
+import { Card, List } from "antd";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getTop3 } from "../../apis";
 
 type Post = {
   boardNumber: number;

@@ -12,7 +12,7 @@ import {
   Typography,
   message,
 } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { deleteComment, getComment, updateComment, writeComment } from "../../apis";
 import "./style.css";
@@ -169,7 +169,7 @@ const CommentList = ({ boardNumber }: CommentListProps) => {
               avatar={
                 comment.user && comment.user.userProfile ? (
                   <Avatar
-                    src={`https://moonfamily.kro.kr/${comment.user.userProfile}`}
+                    src={`${process.env.REACT_APP_API_URL}/${comment.user.userProfile}`}
                     style={{ marginTop: "20px" }}
                   />
                 ) : (

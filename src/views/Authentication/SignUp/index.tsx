@@ -1,5 +1,6 @@
 import { Button, Form, Input, message } from "antd";
 import "./style.css";
+import React from "react";
 import { signUpApi } from "../../../apis";
 
 interface Props {

@@ -1,8 +1,8 @@
-import { Form, Input, Button, message } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
-import { updateApi, getDetail } from "../../apis";
+import { Button, Form, Input, message } from "antd";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getDetail, updateApi } from "../../apis";
 
 interface User {
   userId: string;

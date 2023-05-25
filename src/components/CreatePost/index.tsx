@@ -1,14 +1,14 @@
-import { Form, Input, Button, message } from "antd";
+import { Button, Form, Input, message } from "antd";
+import React from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { writeApi } from "../../apis";
-import { useCookies } from "react-cookie";
 
 function CreatePost() {
   const history = useNavigate();
   const [cookies] = useCookies();
 
   const onFinish = async (values: any) => {
-    // 게시글 작성 처리 로직
     const token = cookies.token;
     const writeResponse = await writeApi(values, token);
     if (!writeResponse || !writeResponse.result) {
@@ -17,8 +17,6 @@ function CreatePost() {
     }
 
     message.success("게시글이 작성되었습니다.");
-
-    // 게시글 목록 페이지로 이동
     history("/board");
   };
 

@@ -1,4 +1,5 @@
 import ConfigProvider from "antd/es/config-provider";
+import React from "react";
 import "./App.css";
 import MainLayout from "./views/layouts/MainLayout";
 

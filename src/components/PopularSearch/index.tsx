@@ -1,6 +1,6 @@
-import { Card, Divider, List, Tag } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { Card, List } from "antd";
+import React, { useEffect, useState } from "react";
 import { getPopularSearch } from "../../apis";
 
 type Post = {

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Table, Row, Col, Pagination, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { Button, Col, Pagination, Row, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { clickBoard, getList } from "../../apis";
 import "./style.css";
-import { useCookies } from "react-cookie";
 
 interface User {
   userId: string;
@@ -94,35 +94,33 @@ const Board = () => {
 
   return (
     <>
-      <div className="board-box">
-        <Table
-          columns={columns}
-          dataSource={list}
-          pagination={false}
-          rowKey="boardNumber"
-          scroll={{ x: true }}
-          onRow={(record) => ({
-            onClick: () => {
-              handleRowClick(record);
-            },
-          })}
-        />
-        <Row justify="center" gutter={[0, 16]}>
-          <Col xs={24} sm={12}>
-            <Pagination current={currentPage} total={totalPages * 10} onChange={handlePageChange} />
-          </Col>
-          <Col xs={24} sm={12}>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={handleClickAddPost}
-              style={{ width: "100%" }}
-            >
-              새 글 작성
-            </Button>
-          </Col>
-        </Row>
-      </div>
+      <Table
+        columns={columns}
+        dataSource={list}
+        pagination={false}
+        rowKey="boardNumber"
+        scroll={{ x: true }}
+        onRow={(record) => ({
+          onClick: () => {
+            handleRowClick(record);
+          },
+        })}
+      />
+      <Row justify="center" gutter={[0, 16]}>
+        <Col xs={24} sm={12}>
+          <Pagination current={currentPage} total={totalPages * 10} onChange={handlePageChange} />
+        </Col>
+        <Col xs={24} sm={12}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={handleClickAddPost}
+            style={{ width: "100%" }}
+          >
+            새 글 작성
+          </Button>
+        </Col>
+      </Row>
     </>
   );
 };

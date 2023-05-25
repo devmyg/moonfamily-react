@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
+import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
@@ -35,6 +36,9 @@ export default function Menu() {
           <Link to={"/board"}>
             <Button>게시판</Button>
           </Link>
+          <Link to={"/chat"}>
+            <Button>채팅</Button>
+          </Link>
           <Input.Search
             placeholder="검색어를 입력하세요"
             onSearch={handleSearch}
@@ -51,7 +55,7 @@ export default function Menu() {
                   size="small"
                   src={
                     cookies.user && cookies.user.userProfile != null
-                      ? `https://moonfamily.kro.kr/` + cookies.user.userProfile
+                      ? `${process.env.REACT_APP_API_URL}/` + cookies.user.userProfile
                       : "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
                   }
                   alt="avatar"

@@ -1,6 +1,6 @@
 import { LikeOutlined } from "@ant-design/icons";
 import { Avatar, Button, Col, Divider, Grid, Row, Typography } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import { clickBoardLike, deleteBoard, getDetail } from "../../apis";
@@ -101,7 +101,7 @@ const BoardDetail = () => {
               <Avatar
                 src={
                   board.user && board.user.userProfile
-                    ? `https://moonfamily.kro.kr/${board.user.userProfile}`
+                    ? `${process.env.REACT_APP_API_URL}/${board.user.userProfile}`
                     : `https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg`
                 }
                 size={32}
