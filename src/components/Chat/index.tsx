@@ -1,13 +1,15 @@
 import { SendOutlined } from "@ant-design/icons";
-import { Button, Input, List } from "antd";
+import { Button, Input, List, Avatar } from "antd";
 import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import "./style.css";
+import { useCookies } from "react-cookie";
 
 const Chat = () => {
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [cookies] = useCookies();
   const messageListRef = useRef<HTMLDivElement | null>(null);
   const stompClientRef = useRef<Stomp.Client | null>(null);
 
@@ -15,10 +17,11 @@ const Chat = () => {
     const socket = new SockJS(`http://moonfamily.duckdns.org:8080/chat`);
     const stompClient = Stomp.over(socket);
     stompClientRef.current = stompClient;
+    stompClient.debug = () => {};
 
     stompClient.connect({}, () => {
       stompClient.subscribe("/topic/messages", (message) => {
-        const receivedMessage = JSON.parse(message.body) as string;
+        const receivedMessage = JSON.parse(message.body);
         setMessages((prevMessages) => [...prevMessages, receivedMessage]);
       });
     });
@@ -43,8 +46,11 @@ const Chat = () => {
   const handleSendMessage = () => {
     if (inputValue.trim() !== "") {
       const message = inputValue.trim();
+      const token = cookies.token;
+      const header = { Authorization: `${token}` };
+
       if (stompClientRef.current) {
-        stompClientRef.current.send("/chat", {}, JSON.stringify(message));
+        stompClientRef.current.send("/chat", header, JSON.stringify(message));
       }
       setInputValue("");
     }
@@ -57,13 +63,28 @@ const Chat = () => {
     }
   };
 
+  const renderMessage = (message: any, index: number) => {
+    const { userId, userName, userProfile, content } = message.data;
+    const avatar = userProfile ? (
+      <Avatar src={`${process.env.REACT_APP_API_URL}/${userProfile}`} alt={userName} />
+    ) : (
+      <Avatar
+        src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+        alt={userName}
+      />
+    );
+    const messageText = `${userName}: ${content.replace(/"/g, "")}`;
+    return (
+      <List.Item key={index} className="message-item">
+        <List.Item.Meta avatar={avatar} title={messageText} />
+      </List.Item>
+    );
+  };
+
   return (
     <div className="chat-component">
       <div className="chat-messages" ref={messageListRef}>
-        <List
-          dataSource={messages}
-          renderItem={(item) => <List.Item className="message-item">{item}</List.Item>}
-        />
+        <List dataSource={messages} renderItem={renderMessage} />
       </div>
       <div className="chat-input">
         <Input
