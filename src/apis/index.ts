@@ -3,13 +3,13 @@ import axios from "axios";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const signInApi = async (data: any) => {
-  const response = await axios.post(`${apiUrl}/api/auth/signIn`, data).catch((error) => null);
+  const response = await axios.post(`${apiUrl}/api/auth/signin`, data).catch((error) => null);
   if (!response) return null;
   return response.data;
 };
 
 export const signUpApi = async (data: any) => {
-  const response = await axios.post(`${apiUrl}/api/auth/signUp`, data).catch((error) => null);
+  const response = await axios.post(`${apiUrl}/api/auth/signup`, data).catch((error) => null);
   if (!response) return null;
   return response.data;
 };
@@ -137,7 +137,7 @@ export const getTop3 = async () => {
 };
 
 export const getPopularSearch = async () => {
-  const response = await axios.get(`${apiUrl}/api/popularSearch`).catch((error) => null);
+  const response = await axios.get(`${apiUrl}/api/popular-search`).catch((error) => null);
   if (!response) return null;
   return response.data;
 };
@@ -162,7 +162,7 @@ export const writeComment = async (data: any, token: string) => {
 
 export const uploadProfile = async (data: FormData, token: string) => {
   const response = await axios
-    .post(`${apiUrl}/api/user/uploadProfilePicture`, data, {
+    .post(`${apiUrl}/api/user/upload-profile-picture`, data, {
       headers: {
         Authorization: `${token}`,
       },
