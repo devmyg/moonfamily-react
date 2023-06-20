@@ -14,7 +14,7 @@ const Chat = () => {
   const stompClientRef = useRef<Stomp.Client | null>(null);
 
   useEffect(() => {
-    const socket = new SockJS(`http://moonfamily.duckdns.org:8080/chat`);
+    const socket = new SockJS(`${process.env.REACT_APP_API_URL}/chat`);
     const stompClient = Stomp.over(socket);
     stompClientRef.current = stompClient;
     stompClient.debug = () => {};
